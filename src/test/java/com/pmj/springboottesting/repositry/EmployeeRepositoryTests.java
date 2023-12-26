@@ -65,5 +65,26 @@ public class EmployeeRepositoryTests {
         assertThat(employeeList.size()).isEqualTo(2);
     }
 
+    //Junit test for get employee by id operation
+    @DisplayName("Junit test for get employee by id operation")
+    @Test
+    public void givenEmployeeObject_whenFindById_thenReturnEmployeeObject(){
+        // given recondition or setup
+        Employee employee = Employee.builder()
+                .firstName("Pramitha")
+                .lastName("Jayasooriya")
+                .email("lpramithamj@gmail.com")
+                .build();
+
+        employeeRepository.save(employee);
+
+        //when - action or the behavior that we are going to test
+
+        Employee employeeDB = employeeRepository.findById(employee.getId()).get();
+
+        //then - verify the output
+        assertThat(employeeDB).isNotNull();
+
+    }
 
 }
