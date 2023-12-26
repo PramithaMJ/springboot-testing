@@ -1,5 +1,4 @@
 package com.pmj.springboottesting.repositry;
-
 import com.pmj.springboottesting.model.Employee;
 import com.pmj.springboottesting.repository.EmployeeRepository;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -7,6 +6,8 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+
+import java.util.List;
 
 @DataJpaTest
 public class EmployeeRepositoryTests {
@@ -34,4 +35,35 @@ public class EmployeeRepositoryTests {
 //        Assertions.assertThat(savedEmployee).isNotNull();
 //        Assertions.assertThat(savedEmployee.getId()).isGreaterThan(0);
     }
+
+    //Junit test for get all the employees operation
+    @DisplayName("Junit test for get all the employees operation")
+    @Test
+    public void givenEmployeesList_whenFindAll_thenEmployeesList(){
+        // given recondition or setup
+        Employee employee = Employee.builder()
+                .firstName("Pramitha")
+                .lastName("Jayasooriya")
+                .email("lpramithamj@gmail.com")
+                .build();
+
+        Employee employee1 = Employee.builder()
+                .firstName("Mihiranga")
+                .lastName("Jayasooriya")
+                .email("mihiranga@gmail.com")
+                .build();
+
+        employeeRepository.save(employee);
+        employeeRepository.save(employee1);
+
+        //when - action or the behavior that we are going to test
+
+        List<Employee> employeeList = employeeRepository.findAll();
+
+        //then - verify the output
+        assertThat(employeeList).isNotNull();
+        assertThat(employeeList.size()).isEqualTo(2);
+    }
+
+
 }
