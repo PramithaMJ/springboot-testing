@@ -144,7 +144,7 @@ public class EmployeeRepositoryTests {
                 .build();
 
         //when - action or the behavior that we are going to test
-        employeeRepository.delete(employee);
+        employeeRepository.deleteById(employee.getId());
         Optional<Employee>employeeOptional = employeeRepository.findById(employee.getId());
 
         //then - verify the output
