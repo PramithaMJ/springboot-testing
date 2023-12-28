@@ -12,8 +12,12 @@ import java.util.Optional;
 @Service
 public class EmployeeServiceIMPL implements EmployeeService {
 
-    @Autowired
     private EmployeeRepository employeeRepository;
+    @Autowired
+    public EmployeeServiceIMPL(EmployeeRepository employeeRepository) {
+        this.employeeRepository = employeeRepository;
+    }
+
     @Override
     public Employee saveEmployee(Employee employee) {
 
