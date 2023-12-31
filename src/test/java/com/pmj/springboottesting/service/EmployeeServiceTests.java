@@ -7,20 +7,37 @@ import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.mockito.BDDMockito;
+import org.junit.jupiter.api.extension.ExtendWith;
+import static org.mockito.BDDMockito.given;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
 import org.mockito.Mockito;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.Optional;
 
+@ExtendWith(MockitoExtension.class)
 public class EmployeeServiceTests {
+    @Mock
     private EmployeeRepository employeeRepository;
-    private EmployeeService employeeService;
+    @InjectMocks
+    private EmployeeServiceIMPL employeeService;
+
+    private Employee employee;
 
     @BeforeEach
     public void setup() {
 
-        employeeRepository = Mockito.mock(EmployeeRepository.class);
-        employeeService = new EmployeeServiceIMPL(employeeRepository);
+       // employeeRepository = Mockito.mock(EmployeeRepository.class);
+       // employeeService = new EmployeeServiceIMPL(employeeRepository);
+
+        // given recondition or setup
+         employee = Employee.builder()
+                .id(1L)
+                .firstName("Pramitha")
+                .lastName("Jayasooriya")
+                .email("lpramithamj@gmail.com")
+                .build();
 
     }
 
@@ -29,16 +46,10 @@ public class EmployeeServiceTests {
     @Test
     public void givenEmployeeObject_whenSavedEmployee_thenReturnEmployeeObject() {
         // given recondition or setup
-        Employee employee = Employee.builder()
-                .id(1L)
-                .firstName("Pramitha")
-                .lastName("Jayasooriya")
-                .email("lpramithamj@gmail.com")
-                .build();
 
-        BDDMockito.given(employeeRepository.findByEmail(employee.getEmail())).willReturn(Optional.empty());
+        given(employeeRepository.findByEmail(employee.getEmail())).willReturn(Optional.empty());
 
-        BDDMockito.given(employeeRepository.save(employee)).willReturn(employee);
+        given(employeeRepository.save(employee)).willReturn(employee);
 
         System.out.println(employeeRepository);
         System.out.println(employeeService);
