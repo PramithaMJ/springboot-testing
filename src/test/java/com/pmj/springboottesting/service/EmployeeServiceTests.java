@@ -4,7 +4,9 @@ import com.pmj.springboottesting.exception.ResourceNotFoundException;
 import com.pmj.springboottesting.model.Employee;
 import com.pmj.springboottesting.repository.EmployeeRepository;
 import com.pmj.springboottesting.service.impl.EmployeeServiceIMPL;
+
 import static org.assertj.core.api.Assertions.assertThat;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -161,6 +163,26 @@ public class EmployeeServiceTests {
 
         assertThat(savedEmployee).isNotNull();
 
+    }
+
+    //Junit test for updateEmployee method
+    @DisplayName("Junit test for updateEmployee method")
+    @Test
+    public void givenEmployeeObject_whenUpdateEmployee_thenReturnUpdateEmployee() {
+        // given recondition or setup
+        given(employeeRepository.save(employee)).willReturn(employee);
+        employee.setFirstName("PMJ");
+        employee.setEmail("pmj@gmail.com");
+
+        //when - action or the behavior that we are going to test
+
+        Employee updatedEmployee = employeeService.updateEmployee(employee);
+
+        //then - verify the output
+
+        assertThat(updatedEmployee).isNotNull();
+        assertThat(updatedEmployee.getFirstName()).isEqualTo("PMJ");
+        assertThat(updatedEmployee.getEmail()).isEqualTo("pmj@gmail.com");
     }
 
 }
