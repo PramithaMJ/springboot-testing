@@ -4,7 +4,7 @@ import com.pmj.springboottesting.exception.ResourceNotFoundException;
 import com.pmj.springboottesting.model.Employee;
 import com.pmj.springboottesting.repository.EmployeeRepository;
 import com.pmj.springboottesting.service.impl.EmployeeServiceIMPL;
-import org.assertj.core.api.Assertions;
+import static org.assertj.core.api.Assertions.assertThat;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -69,7 +69,7 @@ public class EmployeeServiceTests {
         System.out.println(savedEmployee);
 
         //then - verify the output
-        Assertions.assertThat(savedEmployee).isNotNull();
+        assertThat(savedEmployee).isNotNull();
     }
 
     //Junit test for saveEmployee method which throws exception
@@ -105,7 +105,7 @@ public class EmployeeServiceTests {
                 .email("mihiranga@gmail.com")
                 .build();
 
-        given(employeeRepository.findAll()).willReturn(List.of(employee,employee1));
+        given(employeeRepository.findAll()).willReturn(List.of(employee, employee1));
 
         //when - action or the behavior that we are going to test
 
@@ -113,9 +113,9 @@ public class EmployeeServiceTests {
 
         //then - verify the output
 
-        Assertions.assertThat(employeeList).isNotNull();
+        assertThat(employeeList).isNotNull();
         //Assertions.assertThat(employeeList).hasSize(2);
-        Assertions.assertThat(employeeList.size()).isEqualTo(2);
+        assertThat(employeeList.size()).isEqualTo(2);
 
     }
 
@@ -140,8 +140,26 @@ public class EmployeeServiceTests {
 
         //then - verify the output
 
-        Assertions.assertThat(employeeList).isEmpty();
-        Assertions.assertThat(employeeList.size()).isEqualTo(0);
+        assertThat(employeeList).isEmpty();
+        assertThat(employeeList.size()).isEqualTo(0);
+
+    }
+
+    //Junit test for getEmployeeById method
+    @DisplayName("Junit test for getEmployeeById method")
+    @Test
+    public void givenEmployeeId_whenGetEmployeeById_thenReturnEmployeeObject() {
+        // given recondition or setup
+
+        given(employeeRepository.findById(employee.getId())).willReturn(Optional.of(employee));
+
+        //when - action or the behavior that we are going to test
+
+        Employee savedEmployee = employeeService.getEmployeeById(employee.getId()).get();
+
+        //then - verify the output
+
+        assertThat(savedEmployee).isNotNull();
 
     }
 
