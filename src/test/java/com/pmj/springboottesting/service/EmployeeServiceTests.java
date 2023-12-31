@@ -14,8 +14,8 @@ import org.junit.jupiter.api.extension.ExtendWith;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
-import static org.mockito.Mockito.never;
-import static org.mockito.Mockito.verify;
+import static org.mockito.BDDMockito.willDoNothing;
+import static org.mockito.Mockito.*;
 
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -183,6 +183,21 @@ public class EmployeeServiceTests {
         assertThat(updatedEmployee).isNotNull();
         assertThat(updatedEmployee.getFirstName()).isEqualTo("PMJ");
         assertThat(updatedEmployee.getEmail()).isEqualTo("pmj@gmail.com");
+    }
+
+    //Junit test for deleteEmployeeById method
+    @DisplayName("Junit test for deleteEmployeeById method")
+    @Test
+    public void givenEmployeeId_whenDeleteEmployee_thenNothing() {
+        // given recondition or setup
+        //long employeeId = 1L;
+        willDoNothing().given(employeeRepository).deleteById(employee.getId());
+
+        //when - action or the behavior that we are going to test
+        employeeService.deleteEmployeeById(employee.getId());
+
+        //then - verify the output
+        verify(employeeRepository,times(1)).deleteById(employee.getId());
     }
 
 }
