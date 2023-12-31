@@ -20,6 +20,7 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.util.List;
 import java.util.Optional;
 
 @ExtendWith(MockitoExtension.class)
@@ -34,11 +35,11 @@ public class EmployeeServiceTests {
     @BeforeEach
     public void setup() {
 
-       // employeeRepository = Mockito.mock(EmployeeRepository.class);
-       // employeeService = new EmployeeServiceIMPL(employeeRepository);
+        // employeeRepository = Mockito.mock(EmployeeRepository.class);
+        // employeeService = new EmployeeServiceIMPL(employeeRepository);
 
         // given recondition or setup
-         employee = Employee.builder()
+        employee = Employee.builder()
                 .id(1L)
                 .firstName("Pramitha")
                 .lastName("Jayasooriya")
@@ -86,6 +87,33 @@ public class EmployeeServiceTests {
         });
 
         // then
-        verify(employeeRepository,never()).save(any(Employee.class));
+        verify(employeeRepository, never()).save(any(Employee.class));
+    }
+
+    //Junit test for getAllEmployees method
+    @DisplayName("Junit test for getAllEmployees method")
+    @Test
+    public void givenEmployeeList_whenGetAllEmployees_thenReturnEmployeesList() {
+        // given recondition or setup
+
+        Employee employee1 = Employee.builder()
+                .id(2L)
+                .firstName("Mihiranga")
+                .lastName("PM")
+                .email("mihiranga@gmail.com")
+                .build();
+
+        given(employeeRepository.findAll()).willReturn(List.of(employee,employee1));
+
+        //when - action or the behavior that we are going to test
+
+        List<Employee> employeeList = employeeService.getAllEmployees();
+
+        //then - verify the output
+
+        Assertions.assertThat(employeeList).isNotNull();
+        //Assertions.assertThat(employeeList).hasSize(2);
+        Assertions.assertThat(employeeList.size()).isEqualTo(2);
+
     }
 }
